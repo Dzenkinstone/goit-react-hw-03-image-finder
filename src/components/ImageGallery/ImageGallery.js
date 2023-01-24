@@ -1,10 +1,10 @@
 import { List } from './ImageGallery.styled';
 import { ImageGalleryItem } from 'components/ImageGalleryItem';
 
-export const ImageGallery = ({ images, handleClick }) => {
+export const ImageGallery = ({ images, onShow }) => {
   return (
     <List>
-      <ImageGalleryItem images={images} handleClick={handleClick} />
+      <ImageGalleryItem images={images} onShow={onShow} />
     </List>
   );
 };
