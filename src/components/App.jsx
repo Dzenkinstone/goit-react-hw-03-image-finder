@@ -36,9 +36,7 @@ export class App extends Component {
 
         this.setState(prevState => ({
           images: [...prevState.images, ...updatedImages],
-          showButton:
-            this.state.page <
-            Math.ceil(images.totalHits / updatedImages.length),
+          showButton: this.state.page < Math.ceil(images.totalHits / 12),
         }));
       } catch (error) {
         console.error(error);
@@ -74,9 +72,11 @@ export class App extends Component {
   };
 
   handleKeyDown = ({ code }) => {
+    console.log(code);
     if (code === 'Escape') {
-      window.removeEventListener('keydown', this.handleKeyDown);
-      return this.setState({ showModal: false });
+      return this.setState(({ showModal }) => ({
+        showModal: !showModal,
+      }));
     }
   };
 
@@ -89,7 +89,12 @@ export class App extends Component {
         />
         <Toaster />
         <ImageGallery images={this.makeOptions} onShow={this.handleCLick} />
-        {this.state.showModal && <Modal url={this.state.selectedImage} />}
+        {this.state.showModal && (
+          <Modal
+            onKeyDown={this.handleKeyDown}
+            url={this.state.selectedImage}
+          />
+        )}
         {this.state.showButton && (
           <Button onChange={this.loadMore} isLoading={this.state.isLoading} />
         )}
